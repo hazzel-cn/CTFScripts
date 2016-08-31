@@ -17,32 +17,15 @@ class checkUrl(object):
         self.__dirname = os.path.split(url)
         self.__script = os.path.splitext(url)
 
-    def swp(self):
-        u = os.path.join(self.__dirname[0], '.' + self.__filename + '.swp')
+    def vimdown(self, suffix):
+        u = os.path.join(self.__dirname[0], '.' + self.__filename + suffix)
         print '[Try]', u,
         if requests.get(u).status_code != 404:
             print '[Success]'
-            os.system('wget ' + u + ' -O ./pages/' + self.__filename + '.swp')
+            os.system('wget ' + u + ' -O ./pages/' + self.__filename + suffix)
         else:
             print '[Fail]'
 
-    def swo(self):
-        u = os.path.join(self.__dirname[0], '.' + self.__filename + '.swo')
-        print '[Try]', u,
-        if requests.get(u).status_code != 404:
-            print '[Success]'
-            os.system('wget ' + u + ' -O ./pages/' + self.__filename + '.swo')
-        else:
-            print '[Fail]'
-
-    def swn(self):
-        return os.path.join(self.__dirname[0], '.' + self.__filename + '.swn')
-        print '[Try]', u,
-        if requests.get(u).status_code != 404:
-            print '[Success]'
-            os.system('wget ' + u + ' -O ./pages/' + self.__filename + '.swn')
-        else:
-            print '[Fail]'
 
     def wave(self): # For gedit
         u = self.__url + '~'
@@ -109,9 +92,9 @@ def main():
         for url in urls:
             cu = checkUrl(url)
             try:
-                cu.swp()
-                cu.swo()
-                cu.swn()
+                cu.vimdown('.swp')
+                cu.vimdown('.swn')
+                cu.vimdown('.swo')
                 cu.wave()
             except:
                 pass
