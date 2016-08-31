@@ -2,6 +2,6 @@
 
 ---
 
-Some useful scripts for ctf game.
+Some useful scripts for ctf game, especially for web.
 
 Powered by Dawn, WHU
