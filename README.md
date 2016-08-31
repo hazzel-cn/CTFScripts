@@ -1,5 +1,7 @@
-# hzscan
+# CTF Scripts
 
 ---
 
-A scanner by hazzel. My private project of build a scanner to help me find those bugs of website easily.
+Some useful scripts for ctf game.
+
+Powered by Dawn, WHU
