@@ -5,11 +5,6 @@
     1. Sometimes GET prameter will not show in the page.
     2. Requests:get / post can not request with $header array.
 */
-
-
-
-
-
 include('requests/Requests.php');
 Requests::register_autoloader();
 #echo "Good<br>";
@@ -42,7 +37,7 @@ class reqPackage
                 $uri = $_SERVER['PHP_SELF'] .'?'. $_SERVER['QUERY_STRING'];
             }
         }
-        $this->url = 'http://' . $this->domin . $uri;
+        $this->url = 'http://' . $this->domin. $uri;
         return $this->url;
     }
 
@@ -64,30 +59,42 @@ class reqPackage
             }
         }
         */
+        
         $headers = getallheaders();
         $this->Headers = $headers;
         return $this->Headers;
     }
-
-
     function send_request()
     {
         $method = $_SERVER['REQUEST_METHOD'];
         $url = $this->url;
         $headers = $this->Headers;
         $headers['Host'] = $this->domin;
-        $headers['Connection'] = 'close';
+        $headers['Connection'] = 'Keep-Alive';
 
         if ($method == 'GET')
         {
             $request = Requests::get($url, $headers);
         }
 
-        elseif ($method == 'POST') {
+        elseif ($method == 'POST') 
+        {
             $data = $this->POSTs;
             $request = Requests::post($url, $headers, $data);
+
         }
-        echo $request->body;
+
+        foreach($request->headers as $k=>$v)
+        { 
+            if ($v == "gzip") continue;
+            else
+            header((string)$k.": ".(string)$v,true);
+        }
+  
+        
+       echo $request->body;
+        //print_r($request->headers);
+
     }
 
 }
