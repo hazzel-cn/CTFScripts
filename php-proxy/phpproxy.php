@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * Bugs to be fixed:
+    1. Sometimes GET prameter will not show in the page.
+    2. Requests:get / post can not request with $header array.
+*/
+
+
+
+
+
 include 'Requests/library/Requests.php';
 Requests::register_autoloader();
 #echo "Good<br>";
@@ -57,25 +67,26 @@ class reqPackage
         }
         */
         $headers = getallheaders();
-        $this->headers = $headers;
-        return $this->headers;
+        $this->Headers = $headers;
+        return $this->Headers;
     }
 
 
     function send_request()
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        #$url = $this->url;
-        $url = 'http://www.hazzel.cn';
-        $headers = $this->headers;
+        $url = $this->url;
+        $headers = $this->Headers;
+        
         if ($method == 'GET')
         {
-            var_dump($headers);
-            $request = Requests::get($url, $headers);
+            print_r($headers);
+            $request = Requests::get($url, array('X-Requests' => 'Is Awesome!'));
         }
         elseif ($method == 'POST') {
-            #$request = Requests::post($this->url, $this->headers, $this->POSTs);
-            echo '1';
+            $data = $this->POSTs;
+            print_r($data);
+            $request = Requests::post($url, $data);
         }
         echo $request->body;
         #echo "<br><br>Hi";
@@ -85,8 +96,9 @@ class reqPackage
 
 
 $r = new reqPackage();
-$r->get_url();
+echo $r->get_url();
 $r->load_header();
+$r->load_data();
 $r->send_request();
 
 ?>
