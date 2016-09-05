@@ -2,4 +2,4 @@
 
 Some useful scripts for ctf game, especially for web.
 
-Powered by Dawn, WHU
+Powered by Dawn, Wuhan University, China
