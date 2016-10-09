@@ -3,20 +3,21 @@ from os import urandom
 from hashlib import md5
 import sys
 
+processor_number = 8
+
+
 def work(cipher):
-    for i in range(100):
+    for i in xrange(100):
         plain = urandom(16).encode('hex')
         if md5(plain).hexdigest()[:6] == cipher:
             print plain
             sys.exit(0)
-
-
-
+            
 
 if __name__ == '__main__':
     cipher = raw_input('md5:')
-    print multiprocessing.cpu_count()
-    pool = multiprocessing.Pool(processes=8)
+    print 'Processor Number:', multiprocessing.cpu_count()
+    pool = multiprocessing.Pool(processes=processor_number)
     while True:
         plain = urandom(16).encode('hex')
         pool.apply_async(work, (cipher, ))
