@@ -7,12 +7,10 @@ processor_number = 8
 
 
 def work(cipher):
-    global flag
     for i in xrange(100):
         plain = urandom(16).encode('hex')
         if md5(plain).hexdigest()[:6] == cipher:
             print plain
-            flag = False
             sys.exit(0)
             
 
