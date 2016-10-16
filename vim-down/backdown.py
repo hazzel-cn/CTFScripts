@@ -95,6 +95,7 @@ def main():
                 cu.vimdown('.swp')
                 cu.vimdown('.swn')
                 cu.vimdown('.swo')
+                cu.vimdown('.swp4')
                 cu.wave()
             except:
                 pass
