@@ -8,33 +8,63 @@ from bs4 import BeautifulSoup
 
 
 class checkUrl(object):
-    """docstring for checkDown"""
     def __init__(self, url):
         if url[0:4] != 'http':
             url = 'http://' + url
         self.__url = url
-        self.__filename = os.path.basename(url)
+        #self.__filename = os.path.basename(url)
         self.__dirname = os.path.split(url)
-        self.__script = os.path.splitext(url)
+        #self.__script = os.path.splitext(url)
 
     def vimdown(self, suffix):
-        u = os.path.join(self.__dirname[0], '.' + self.__filename + suffix)
-        print '[Try]', u,
-        if requests.get(u).status_code != 404:
-            print '[Success]'
-            os.system('wget ' + u + ' -O ./pages/' + self.__filename + suffix)
+        #u = os.path.join(self.__dirname[0], '/.' + self.__dirname[1] + suffix)
+        u = self.__dirname[0] + '/.' + self.__dirname[1] + suffix
+        print '\n[Try]', u
+
+        ##### Doing GET request ####
+        print ' *[ GET]',
+        r = requests.get(u)
+        if r.status_code == 200:
+            print '[Success] <<<===========\a'
+            f = open('./pages/' + self.__dirname[1] + suffix,'wb')
+            f.write(r.content)
         else:
-            print '[Fail]'
+            print '[Fail]', r.status_code
+
+        ##### Doing POST request ####
+        print ' *[POST]',
+        r = requests.post(u)
+        if r.status_code == 200:
+            print '[Success] <<<===========\a'
+            f = open('./pages/' + self.__dirname[1] + suffix,'wb')
+            f.write(r.content)
+        else:
+            print '[Fail]', r.status_code
 
 
     def wave(self): # For gedit
         u = self.__url + '~'
-        print '[Try]', u,
-        if requests.get(u).status_code != 404:
-            print '[Success]'
-            os.system('wget ' + u + ' -O ./pages/' + self.__filename + '~')
+        print '\n[Try]', u
+
+        ##### Doing GET request ####
+        print ' *[ GET]',
+        r = requests.get(u)
+        if r.status_code == 200:
+            print '[Success] <<<===========\a'
+            f = open('./pages/' + self.__dirname[1] + suffix,'wb')
+            f.write(r.content)
         else:
-            print '[Fail]'
+            print '[Fail]', r.status_code
+
+        ##### Doing POST request ####
+        print ' *[POST]',
+        r = requests.post(u)
+        if r.status_code == 200:
+            print '[Success] <<<===========\a'
+            f = open('./pages/' + self.__dirname[1] + suffix,'wb')
+            f.write(r.content)
+        else:
+            print '[Fail]', r.status_code
 
 
 def spyder_run(url):
@@ -68,13 +98,13 @@ def spyder_run(url):
 
 
 def main():
-    spyder = raw_input('Spyder or not?(Beta)[Y/n]:')
+    spyder = raw_input('Spyder or not?(Beta)[N/y]:')
 
-    if spyder == 'n':
-        pass
-    else:
+    if spyder == 'y':
         initUrl = raw_input('Input URL:')
         spyder_run(initUrl)
+    else:
+        pass
 
     try:
         os.mkdir('pages')
@@ -92,13 +122,13 @@ def main():
         for url in urls:
             cu = checkUrl(url)
             try:
-                cu.vimdown('.swp')
-                cu.vimdown('.swn')
-                cu.vimdown('.swo')
-                cu.vimdown('.swp4')
+                cu.vimdown(suffix='.swp')
+                cu.vimdown(suffix='.swn')
+                cu.vimdown(suffix='.swo')
+                cu.vimdown(suffix='.swp4')
                 cu.wave()
-            except:
-                pass
+            except Exception,e:
+                print Exception,":",e
         time.sleep(3)
 
 if __name__ == '__main__':

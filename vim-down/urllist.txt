@@ -1,1 +1,1 @@
-127.0.0.1/index.php
+http://e6822ee872e341df89887cd751b30b4af322bda0f9224618.game.ichunqiu.com/index.php
